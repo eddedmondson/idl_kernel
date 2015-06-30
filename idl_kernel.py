@@ -78,7 +78,7 @@ class IDLKernel(Kernel):
         finally:
             signal.signal(signal.SIGINT, sig)
 
-        self.idlwrapper.run_command("!quiet=1 & defsysv,'!inline',0 & !more=0".rstrip(), timeout=None)
+        self.idlwrapper.run_command("!quiet=1 & defsysv,'!inline',0 & defsysv, '!inline_8objs',ptr_new(!NULL) & !more=0".rstrip(), timeout=None)
 
     def do_execute(self, code, silent, store_history=True, user_expressions=None,
                    allow_stdin=False):
@@ -138,7 +138,17 @@ class IDLKernel(Kernel):
                         ;t_eT1aefa9=cgSnapshot(filename=outfile_c5BXq4dV,/PNG,/NODIALOG)
                     endif
                 endfor
-	    endif
+            endif
+            if !inline and (n_elements(*!inline_8objs) gt 0) then begin
+                for i_Rahch9ae=0L, n_elements(*!inline_8objs)-1 do begin
+                    print, i_Rahch9ae ;, (*(*!inline_8objs)[i_Rahch9ae])
+                    outfile_c5BXq4dV = '%(plot_dir)s/__fig'+strtrim(i_Rahch9ae,2)+'.png'
+                	(*(*!inline_8objs)[i_Rahch9ae]).save,outfile_c5BXq4dV
+                	ptr_free,(*!inline_8objs)[i_Rahch9ae]
+                endfor
+                ptr_free, !inline_8objs
+                !inline_8objs=ptr_new(!NULL)
+            endif
         end
         """ % locals()
 
