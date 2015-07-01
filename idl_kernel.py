@@ -35,7 +35,7 @@ class IDLKernel(Kernel):
         if self._banner is None:
             try:
                 if os.path.basename(self._executable) == 'idl':
-                    self._banner = check_output([self._executable, '-e','"print,string(0B)"']).decode('utf-8')
+                    self._banner = check_output([self._executable, '-e','print,string(0B)']).decode('utf-8')
                 else:
                     self._banner = check_output([self._executable, '--version']).decode('utf-8')
             except:
@@ -153,7 +153,7 @@ class IDLKernel(Kernel):
         try:
             tfile.file.write(code.rstrip()+postcall.rstrip())
             tfile.file.close()
-            output = self.idlwrapper.run_command(".run "+tfile.name, timeout=None)
+            output = self.idlwrapper.run_command(".run "+tfile.name, timeout=None).decode('utf8')
             # IDL annoying prints out ".run tmp..." command this removes it
             if os.path.basename(self._executable) == 'idl':
                 output = '\n'.join(output.splitlines()[1::])+'\n'
