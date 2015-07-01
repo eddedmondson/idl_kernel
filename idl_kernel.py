@@ -141,7 +141,7 @@ class IDLKernel(Kernel):
             endif
             if !inline and (n_elements(*!inline_8objs) gt 0) then begin
                 for i_Rahch9ae=0L, n_elements(*!inline_8objs)-1 do begin
-                    outfile_c5BXq4dV = '%(plot_dir)s/__fig'+strtrim(i_Rahch9ae,2)+'.png'
+                    outfile_c5BXq4dV = '%(plot_dir)s/__ofig'+strtrim(i_Rahch9ae,2)+'.png'
                 	(*(*!inline_8objs)[i_Rahch9ae]).save,outfile_c5BXq4dV
                 	ptr_free,(*!inline_8objs)[i_Rahch9ae]
                 endfor
