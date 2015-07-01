@@ -135,7 +135,6 @@ class IDLKernel(Kernel):
                     ; Write the PNG if the image is not blank
                     if total(img_bGr4ea3s) ne 0 then begin
                         write_png, outfile_c5BXq4dV, ii_rsApk4JS, r_m9QVFuGP, g_jeeyfQkN, b_mufcResT
-                        ;t_eT1aefa9=cgSnapshot(filename=outfile_c5BXq4dV,/PNG,/NODIALOG)
                     endif
                 endfor
             endif
