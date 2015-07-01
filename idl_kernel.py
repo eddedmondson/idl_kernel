@@ -35,7 +35,7 @@ class IDLKernel(Kernel):
         if self._banner is None:
             try:
                 if os.path.basename(self._executable) == 'idl':
-                    self._banner = check_output([self._executable, '-e','print,string(0B)']).decode('utf-8')
+                    self._banner = check_output([self._executable, '-e','"print,string(0B)"']).decode('utf-8')
                 else:
                     self._banner = check_output([self._executable, '--version']).decode('utf-8')
             except:
@@ -135,13 +135,12 @@ class IDLKernel(Kernel):
                     ; Write the PNG if the image is not blank
                     if total(img_bGr4ea3s) ne 0 then begin
                         write_png, outfile_c5BXq4dV, ii_rsApk4JS, r_m9QVFuGP, g_jeeyfQkN, b_mufcResT
-                        ;t_eT1aefa9=cgSnapshot(filename=outfile_c5BXq4dV,/PNG,/NODIALOG)
                     endif
                 endfor
             endif
             if !inline and (n_elements(*!inline_8objs) gt 0) then begin
                 for i_Rahch9ae=0L, n_elements(*!inline_8objs)-1 do begin
-                    outfile_c5BXq4dV = '%(plot_dir)s/__fig'+strtrim(i_Rahch9ae,2)+'.png'
+                    outfile_c5BXq4dV = '%(plot_dir)s/__ofig'+strtrim(i_Rahch9ae,2)+'.png'
                 	(*(*!inline_8objs)[i_Rahch9ae]).save,outfile_c5BXq4dV
                 	ptr_free,(*!inline_8objs)[i_Rahch9ae]
                 endfor
@@ -154,7 +153,7 @@ class IDLKernel(Kernel):
         try:
             tfile.file.write(code.rstrip()+postcall.rstrip())
             tfile.file.close()
-            output = self.idlwrapper.run_command(".run "+tfile.name, timeout=None).decode('utf8')
+            output = self.idlwrapper.run_command(".run "+tfile.name, timeout=None)
             # IDL annoying prints out ".run tmp..." command this removes it
             if os.path.basename(self._executable) == 'idl':
                 output = '\n'.join(output.splitlines()[1::])+'\n'
